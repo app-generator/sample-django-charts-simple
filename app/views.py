@@ -17,7 +17,15 @@ def index(request):
     context = {'segment': 'index'}
     html_template = loader.get_template('index.html')
 
-    data, labels = Sale.get_sales_report()
+    sales, labels = Sale.get_sales_report()
+    data = [
+        {
+            'y': year,
+            'a': '{:.2f}'.format(sales[year].get('A')),
+            'b': '{:.2f}'.format(sales[year].get('B')),
+            'c': '{:.2f}'.format(sales[year].get('C'))
+        } for year in sales
+    ]
 
     context['chart_data'] = json.dumps({
         'element': 'morris-bar-chart',

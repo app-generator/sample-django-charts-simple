@@ -35,14 +35,5 @@ class Sale(models.Model):
 
             data[sale['year'].year][sale['product_name']] = sale['total_amount']
 
-        res = [
-            {
-                'y': year,
-                'a': '{:.2f}'.format(data[year].get('A')),
-                'b': '{:.2f}'.format(data[year].get('B')),
-                'c': '{:.2f}'.format(data[year].get('C'))
-            } for year in data
-        ]
-
         labels = list(sales.values_list('product_name', flat=True).distinct())
-        return res, labels
+        return data, labels
