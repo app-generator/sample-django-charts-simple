@@ -215,7 +215,7 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 
 ![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/admin_import.png)
 
-> Sample **[Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/samples/sales_data.csv)**
+> Sample **[Data](https://github.com/app-generator/django-simple-charts/blob/master/media/samples/sales_data.csv)**
 
 ## Credits & Links
 
