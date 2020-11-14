@@ -17,28 +17,31 @@ def index(request):
     context = {'segment': 'index'}
     html_template = loader.get_template('index.html')
 
-    sales, labels = Sale.get_sales_report()
-    data = [
-        {
-            'y': year,
-            'a': '{:.2f}'.format(sales[year].get('A')),
-            'b': '{:.2f}'.format(sales[year].get('B')),
-            'c': '{:.2f}'.format(sales[year].get('C'))
-        } for year in sales
-    ]
+    # sales, labels = Sale.get_sales_report()
+    # data = [
+    #     {
+    #         'y': year,
+    #         'a': '{:.2f}'.format(sales[year].get('A')),
+    #         'b': '{:.2f}'.format(sales[year].get('B')),
+    #         'c': '{:.2f}'.format(sales[year].get('C'))
+    #     } for year in sales
+    # ]
+    #
+    # context['chart_data'] = json.dumps({
+    #     'element': 'morris-bar-chart',
+    #     'data': data,
+    #     'xkey': 'y',
+    #     'barSizeRatio': 0.70,
+    #     'barGap': 3,
+    #     'resize': True,
+    #     'responsive': True,
+    #     'ykeys': ['a', 'b', 'c'],  # it can be custom
+    #     'labels': labels,
+    #     'barColors': ['0-#1de9b6-#1dc4e9', '0-#899FD4-#A389D4', '#04a9f5']  # it can be custom
+    # })
 
-    context['chart_data'] = json.dumps({
-        'element': 'morris-bar-chart',
-        'data': data,
-        'xkey': 'y',
-        'barSizeRatio': 0.70,
-        'barGap': 3,
-        'resize': True,
-        'responsive': True,
-        'ykeys': ['a', 'b', 'c'],  # it can be custom
-        'labels': labels,
-        'barColors': ['0-#1de9b6-#1dc4e9', '0-#899FD4-#A389D4', '#04a9f5']  # it can be custom
-    })
+    with open('chart_data.json', 'r') as f:
+        context['chart_data'] = json.dumps(json.load(f))
 
     return HttpResponse(html_template.render(context, request))
 

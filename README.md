@@ -210,6 +210,13 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 
 <br />
 
+### Load Data For Chart
+* In Django admin, you can import data for the **Sales** section. To do this just click on ```Import``` button then select your csv, xls or etc file and submit it.
+
+![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/screenshots/display.png)
+
+> Sample **[Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/samples/sales_data.csv)**
+
 ## Credits & Links
 
 - [Django](https://www.djangoproject.com/) - The official website
