@@ -217,6 +217,8 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 
 > Sample **[Data](https://github.com/app-generator/django-simple-charts/blob/master/media/samples/sales_data.csv)**
 
+<br>
+
 ## Credits & Links
 
 - [Django](https://www.djangoproject.com/) - The official website
