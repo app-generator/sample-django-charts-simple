@@ -36,7 +36,7 @@ PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Suppo
 <br />
 <br />
 
-![Boierplate Code Django Dashboard - Template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/boilerplate-code-django-dashboard/master/media/boilerplate-code-django-dashboard-screen.png)
+![Boierplate Code Django Dashboard - Template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/display.png)
 
 <br />
 
@@ -213,7 +213,7 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 ### Load Data For Chart
 * In Django admin, you can import data for the **Sales** section. To do this just click on ```Import``` button then select your csv, xls or etc file and submit it.
 
-![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/display.png)
+![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/admin_import.png)
 
 > Sample **[Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/samples/sales_data.csv)**
 
