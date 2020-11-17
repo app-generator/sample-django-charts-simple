@@ -9,6 +9,8 @@
 - Deployment scripts: Docker, Gunicorn / Nginx
 - Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup) provided by **AppSeed**
 
+<br />
+
 > Links
 
 - [LIVE Demo](https://django-simple-charts.appseed.us/) - project in action
@@ -183,4 +185,4 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 <br />
 
 ---
-Django Simple Charts - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
+[Django Simple Charts](https://django-simple-charts.appseed.us/) - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
