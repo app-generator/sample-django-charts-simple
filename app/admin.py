@@ -8,7 +8,7 @@ from import_export import resources
 from import_export.admin import ImportMixin
 
 from app.models import Sale
-
+from app.models import Stats
 
 class SaleResource(resources.ModelResource):
     class Meta:
@@ -21,3 +21,14 @@ class SaleAdmin(ImportMixin, admin.ModelAdmin):
     list_display = ['product_name', 'amount', 'created_time']
     search_fields = ['product_name']
     resource_class = SaleResource
+
+class StatsResource(resources.ModelResource):
+    class Meta:
+        model = Stats
+        fields = ['year', 'prod1_sales', 'prod2_sales', 'prod3_sales']
+
+@admin.register(Stats)
+class StatsAdmin(ImportMixin, admin.ModelAdmin):
+    list_display  = ['year', 'prod1_sales', 'prod2_sales', 'prod3_sales']
+    search_fields = ['year']
+    resource_class = StatsResource

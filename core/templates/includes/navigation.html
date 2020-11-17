@@ -2,11 +2,12 @@
     <nav class="pcoded-navbar">
         <div class="navbar-wrapper">
             <div class="navbar-brand header-logo">
-                <a target="_blank" href="https://appseed.us/boilerplate-code/django-dashboard" class="b-brand">
+                <a target="_blank" 
+                   href="https://appseed.us/admin-dashboards/django?ref=sample" class="b-brand">
                     <div class="b-bg">
                         <i class="feather icon-trending-up"></i>
                     </div>
-                    <span class="b-title">Django Boilerplate</span>
+                    <span class="b-title">Django Charts</span>
                 </a>
                 <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
             </div>
@@ -19,6 +20,26 @@
                         class="nav-item {% if 'index' == segment %} active {% endif %}">
                         <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                     </li>
+
+                    <li data-username="Dashboard charts loaded from a file" 
+                        class="nav-item {% if 'charts_from_file' == segment %} active {% endif %}">
+                        <a href="/charts-file" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span>
+                                <span class="pcoded-mtext">Charts from File</span></a>
+                    </li>                    
+                    <li data-username="Dashboard charts loaded from a simple DB table" 
+                        class="nav-item {% if 'charts_from_input' == segment %} active {% endif %}">
+                        <a href="/charts-input" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span>
+                                <span class="pcoded-mtext">Charts from Input</span></a>
+                    </li>                    
+                    <li data-username="Dashboard charts loaded from load data" 
+                        class="nav-item {% if 'charts_from_load' == segment %} active {% endif %}">
+                        <a href="/charts-load" class="nav-link ">
+                            <span class="pcoded-micon"><i class="feather icon-bar-chart"></i></span>
+                                <span class="pcoded-mtext">Charts from Data</span></a>
+                    </li>                    
+                    
                     <li class="nav-item pcoded-menu-caption">
                         <label>UI Element</label>
                     </li>
@@ -56,31 +77,42 @@
                     </li>
                     <li data-username="Charts Morris" class="nav-item {% if 'charts-morris' in segment %} active {% endif %}">
                         <a href="/charts-morris.html" class="nav-link ">
-                            <span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Chart</span></a></li>
+                            <span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span>
+                                <span class="pcoded-mtext">Charts - JS Hardcoded</span></a></li>
                     <li data-username="Maps Google" class="nav-item {% if 'maps-google' in segment %} active {% endif %}">
                         <a href="/maps-google.html" class="nav-link ">
                             <span class="pcoded-micon"><i class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a></li>
+
                     <li class="nav-item pcoded-menu-caption">
-                        <label>Pages</label>
+                        <label>Authentication</label>
                     </li>
-                    <li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
-                        <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Authentication</span></a>
-                        <ul class="pcoded-submenu">
-                            <li class=""><a href="/auth-reset-pass.html" class="">Reset Pass</a></li>
-                            <li class=""><a href={% url 'register' %} class="">Register</a></li>
-                        </ul>
+
+                    {% if user.is_superuser %}
+                    <li data-username="Admin" class="nav-item">
+                        <a href="/admin/" class="nav-link">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-sidebar"></i></span>
+                                    <span class="pcoded-mtext">Admin Dashboard</span></a>
                     </li>
-                    <li data-username="Sample Page" class="nav-item {% if 'page-blank' in segment %} active {% endif %}">
-                        <a href="/page-blank.html" class="nav-link">
-                            <span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li>
+                    {% endif %}
 
                     <li data-username="Disabled Menu" class="nav-item">
-                        <a href={% url 'logout' %} class="nav-link">
-                            <span class="pcoded-micon">
-                                <i class="feather icon-power"></i>
-                            </span>
-                            <span class="pcoded-mtext">Logout - [ {{ request.user.username }} ]</span>
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a href={% url 'logout' %} class="nav-link">
+                                <span class="pcoded-micon">
+                                    <i class="feather icon-power"></i>
+                                </span>
+                                <span class="pcoded-mtext">Logout - [ {{ request.user.username }} ]</span>
+                            </a>
+                        {% else %}
+                            <a href={% url 'login' %} class="nav-link">
+                                <span class="pcoded-micon">
+                                    <i class="feather icon-user"></i>
+                                </span>
+                                <span class="pcoded-mtext">Login</span>
+                            </a>
+                        {% endif %}
+
                     </li>
                 </ul>
             </div>
