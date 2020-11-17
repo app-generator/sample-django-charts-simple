@@ -1,17 +1,19 @@
 # Django Simple Charts
 
-> Playground starter to display simple charts in Django - Features
+> Playground starter to display simple charts in Django using Morris JS: 
 
-- Django Codebase - actively supported by **AppSeed** 
+- [Charts from JSON](https://django-simple-charts.appseed.us/charts-file) - using this [sample](https://github.com/app-generator/django-simple-charts/blob/master/sample_data/chart_morris.json)
+- [Charts from Table](https://django-simple-charts.appseed.us/charts-input) - simple STATS table
+- [Charts from DATA chunk](https://django-simple-charts.appseed.us/charts-input) - using this [sample](https://github.com/app-generator/django-simple-charts/blob/master/sample_data/sales_data.csv) file
 - UI Kit: **Datta Able Dashboard** (Lite Version) provided by **CodedThemes**
 - SQLite Database, Django Native ORM
 - Session-Based Authentication, Forms validation
 - Deployment scripts: Docker, Gunicorn / Nginx
-- Sample Charts: Moris Bar Chart coded in different ways
-- Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup).
+- Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup) provided by **AppSeed**
 
 > Links
 
+- [LIVE Demo](https://django-simple-charts.appseed.us/) - project in action
 - [Generic Codebase](https://github.com/app-generator/boilerplate-code-django-dashboard)
 - [Morris Charts](https://morrisjs.github.io/morris.js/) - Getting started guide
 
