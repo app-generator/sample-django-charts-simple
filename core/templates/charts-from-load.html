@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} Charts from Load {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -25,9 +25,7 @@
                         <div class="col-xl-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Sample Bar Chart loaded from a 
-                                    <a target="_blank" 
-                                       href="https://github.com/app-generator/django-simple-charts/blob/master/sample_data/chart_morris.json">JSON file</a></h5>
+                                    <h5>Bar Chart - Information is rendered after a data load (admin section)</h5>
                                 </div>
                                 <div class="card-block">
 
@@ -49,38 +47,15 @@
                                 <div class="card-block">
 
 <p>
-    Above chart is loaded from a sample file: 
-    <a target="_blank" 
-        href="https://github.com/app-generator/django-simple-charts/blob/master/sample_data/chart_morris.json">chart_morris.json<a> saved in the 
-    <strong>
-        <a target="_blank" 
-            href="https://github.com/app-generator/django-simple-charts/tree/master/sample_data">sample_data</a>
-    </strong> directory.
+    Above chart is generated dinamically based on the information gathered by get_sales_report)(), a inner method defined by Sale model
     <br />
-    To update the charts, open the file in your preferred editor, change the values from ""data" JSON node and refresh the page.
-
-<pre>
-<code class="json">
-# Contents of file: sample_data/chart_morris.json
-{
-    "element": "morris-bar-chart",
-    "data": [
-        { "y": "2017", "a": "150", "b": "90", "c": "80" },
-        { "y": "2018", "a": "220", "b": "350", "c": "50" },
-        { "y": "2019", "a": "80", "b": "300", "c": "240" },
-        { "y": "2020", "a": "180", "b": "30", "c": "10" }
-    ],
-    "xkey": "y",
-    "barSizeRatio": 0.70,
-    "barGap": 3,
-    "resize": true,
-    "responsive": true,
-    "ykeys": ["a", "b", "c"],
-    "labels": ["Product A", "Product B", "Product C"],
-    "barColors": ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4", "#04a9f5"]
-}
-</code>
-</pre>
+    {% if user.is_superuser %}
+        To update the charts, please update the <a target="_blank" href="/admin/app/sale/">SALES</a> table information and refresh the page.
+    {% else %}
+        To update the charts, please authenticate as admin, update the SALES table information and refresh the page.
+        <br />
+        Note: Admin account can be created using the <strong>createsuperuser</strong> command.
+    {% endif %}
 </p>
 
 <br />
@@ -96,34 +71,106 @@
 
 urlpatterns = [
 ...
-    # Charts from file
-    path('charts-file', views.charts_file, name='home'),
+    # Charts from Input
+    path('charts-load'  , views.charts_load,  name='charts-load'  ),
 ...
 ]
 </code>
 </pre>
 
 <br />
-<h5>App Controller</h5>
+<h5>Render Flow</h5>
 <hr />
 <p>
-    The code that render this page is fairly simple. Just load the JSON file from the filesystem and inject it into the page. 
-    <br />
-    Source: <a target="_blank" href="https://github.com/app-generator/django-simple-charts/blob/master/app/views.py">app/views.py</a> 
-    - <strong>charts_file()</strong>:
+The code that render this page use the information from SALES table.
+<br />
+The <a target="_blank" 
+        href="https://github.com/app-generator/django-simple-charts/blob/master/app/models.py">model</a>
+comes with a inner method that selects all rows: <strong>get_sales_report()</strong>. 
+<br />
+Once the SALES rows are selected, controller read the page template and inject the information.   
+<br />
+<br />
+Source: <a target="_blank" href="https://github.com/app-generator/django-simple-charts/blob/master/app/views.py">app/views.py</a> 
+- <strong>charts_load()</strong>:
 <br />
 <pre>
 <code class="python">
 # Partial content from file: app/views.py
+def charts_load(request):
+    context = {'segment': 'charts_from_load'}
+    html_template = loader.get_template('charts-from-load.html')
 
-def charts_file(request):
-    context = {'segment': 'charts_from_file'}
-    html_template = loader.get_template('charts-from-file.html')
+    # -----------------------------------------------
+    # Extract data from Sale table 
+    # -----------------------------------------------
 
-    with open('sample_data/chart_morris.json', 'r') as f:
-        context['chart_data'] = json.dumps(json.load(f))
+    sales, labels = Sale.get_sales_report()
+    data = [
+        {
+            'y': year,
+            'a': '{:.2f}'.format(sales[year].get('A')),
+            'b': '{:.2f}'.format(sales[year].get('B')),
+            'c': '{:.2f}'.format(sales[year].get('C'))
+        } for year in sales
+    ]
+
+    context['chart_data'] = json.dumps({
+        'element': 'morris-bar-chart',
+        'data': data,
+        'xkey': 'y',
+        'barSizeRatio': 0.70,
+        'barGap': 3,
+        'resize': True,
+        'responsive': True,
+        'ykeys': ['a', 'b', 'c'],  # it can be custom
+        'labels': labels,
+        'barColors': ['0-#1de9b6-#1dc4e9', '0-#899FD4-#A389D4', '#04a9f5']  # it can be custom
+    })
 
     return HttpResponse(html_template.render(context, request))
+</code>
+</pre>
+
+<br />
+<h5>Database Model - SALES</h5>
+<hr />
+<p>
+The <a target="_blank" 
+        href="https://github.com/app-generator/django-simple-charts/blob/master/app/models.py">model</a>
+comes with a inner method that selects all rows: <strong>get_sales_report()</strong>. 
+<br />
+<br />
+<pre>
+<code class="python">
+class Sale(models.Model):
+    amount = models.FloatField(_('amount'), db_index=True)
+    product_name = models.CharField(_('product name'), max_length=40, db_index=True)
+    created_time = models.DateTimeField(verbose_name=_('creation On'), db_index=True)
+    updated_time = models.DateTimeField(verbose_name=_('modified On'), auto_now=True)
+
+    class Meta:
+        verbose_name = _('sale')
+        verbose_name_plural = _('sales')
+
+    @classmethod
+    def get_sales_report(cls):
+        annotates = {'total_amount': Sum('amount')}
+
+        sales = cls.objects.annotate(
+            year=TruncYear('created_time')
+        ).values('product_name', 'year').order_by().annotate(**annotates)
+
+        data = {}
+        for sale in sales:
+
+            if sale['year'].year not in data:
+                data[sale['year'].year] = {}
+
+            data[sale['year'].year][sale['product_name']] = sale['total_amount']
+
+        labels = list(sales.values_list('product_name', flat=True).distinct())
+        return data, labels
 </code>
 </pre>
 
@@ -136,7 +183,7 @@ def charts_file(request):
     <br />
     The source file 
     <a target="_blank" 
-       href="https://github.com/app-generator/django-simple-charts/blob/master/core/templates/charts-from-file.html">core/templates/charts-from-file.html</a>.
+       href="https://github.com/app-generator/django-simple-charts/blob/master/core/templates/charts-from-load.html">core/templates/charts-from-load.html</a>.
 </p>
                                 </div>
                             </div>

@@ -1,39 +1,20 @@
-# [Django Dashboard Boilerplate](https://appseed.us/boilerplate-code/django-dashboard)
+# Django Simple Charts
 
-> Template [boilerplate code](https://appseed.us/boilerplate-code) used by [AppSeed](https://appseed.us) to generate simple admin dashboards coded in [Django](https://www.djangoproject.com/) - Features
+> Playground starter to display simple charts in Django - Features
 
+- Django Codebase - actively supported by **AppSeed** 
 - UI Kit: **Datta Able Dashboard** (Lite Version) provided by **CodedThemes**
 - SQLite Database, Django Native ORM
-- Modular design, clean codebase
 - Session-Based Authentication, Forms validation
 - Deployment scripts: Docker, Gunicorn / Nginx
+- Sample Charts: Moris Bar Chart coded in different ways
 - Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup).
 
 > Links
 
-- [Boierplate Code Django Dashboard](https://boilerplate-code-django-dashboard.appseed.us/) - LIVE Demo
-- [Boierplate Code Django](https://docs.appseed.us/boilerplate-code/django-dashboard/) - Documentation
-- [Boierplate Code Django Dashboard](https://appseed.us/boilerplate-code/django-dashboard) - Official product page
-- More [Django Admin Dashboards](https://appseed.us/admin-dashboards/django) - index hosted by **[AppSeed](https://appseed.us)**
-- [Open-Source Admin Dashboards](https://appseed.us/admin-dashboards/open-source) - index hosted by **[AppSeed](https://appseed.us)**
+- [Generic Codebase](https://github.com/app-generator/boilerplate-code-django-dashboard)
+- [Morris Charts](https://morrisjs.github.io/morris.js/) - Getting started guide
 
-> Projects that use this starter
-
-- [Django Corona Dark](https://appseed.us/admin-dashboards/django-dashboard-corona-dark) - [demo](https://django-dashboard-corona-dark.appseed.us/), [sources](https://github.com/app-generator/django-dashboard-corona-dark)
-- [Django DattaAble PRO](https://appseed.us/admin-dashboards/django-dashboard-dattaable-pro) - [demo](https://django-dashboard-dattaable-pro.appseed.us/)
-- [Django Atlantis Dark](https://appseed.us/admin-dashboards/django-dashboard-atlantis-dark) - [demo](https://django-dashboard-atlantis-dark.appseed.us/), [sources](https://github.com/app-generator/django-dashboard-atlantis-dark)
-
-<br />
-
-## Want more? Go PRO!
-
-PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Support** (via [Discord](https://discord.gg/fZC6hup))
-
-| [Django Gradient PRO](https://appseed.us/admin-dashboards/django-dashboard-gradient-pro) | [Django Dashboard Black PRO](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [Django Dashboard Argon PRO](https://appseed.us/admin-dashboards/django-dashboard-argon-pro) |
-| --- | --- | --- |
-| [![Django Gradient PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-gradient-pro/master/media/django-dashboard-gradient-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-gradient-pro) | [![Django Dashboard Black PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-black-pro/master/media/django-dashboard-black-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-black-pro) | [![Django Dashboard Argon PRO](https://raw.githubusercontent.com/app-generator/django-dashboard-argon-pro/master/media/django-dashboard-argon-pro-screen.png)](https://appseed.us/admin-dashboards/django-dashboard-argon-pro)
-
-<br />
 <br />
 
 ![Boierplate Code Django Dashboard - Template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/display.png)
@@ -44,8 +25,8 @@ PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Suppo
 
 ```bash
 $ # Get the code
-$ git clone https://github.com/app-generator/boilerplate-code-django-dashboard.git
-$ cd boilerplate-code-django-dashboard
+$ git clone https://github.com/app-generator/django-simple-charts.git
+$ cd django-simple-charts
 $
 $ # Virtualenv modules installation (Unix based systems)
 $ virtualenv env
@@ -62,6 +43,9 @@ $ # Create tables
 $ python manage.py makemigrations
 $ python manage.py migrate
 $
+$ # Create app superuser
+$ python manage.py createsuperuser
+$
 $ # Start the application (development mode)
 $ python manage.py runserver # default port 8000
 $
@@ -71,9 +55,20 @@ $
 $ # Access the web app in browser: http://127.0.0.1:8000/
 ```
 
-> Note: To use the app, please access the registration page and create a new user. After authentication, the app will unlock the private pages.
+> Note: To use the app, please access the registration page and create a admin user using the `createsuperuser` command
 
 <br />
+
+## Load Data For Chart
+
+In Django admin, you can import data for the **Sales** section. 
+To do this just click on ```IMPORT``` button then select your csv, xls or etc file and submit it.
+
+![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/admin_import.png)
+
+> Sample **[Data](https://github.com/app-generator/django-simple-charts/blob/master/sample_data/sales_data.csv)**
+
+<br>
 
 ## Code-base structure
 
@@ -132,15 +127,6 @@ The project is coded using a simple and intuitive structure presented bellow:
 
 <br />
 
-> The bootstrap flow
-
-- Django bootstrapper `manage.py` uses `core/settings.py` as the main configuration file
-- `core/settings.py` loads the app magic from `.env` file
-- Redirect the guest users to Login page
-- Unlock the pages served by *app* node for authenticated users
-
-<br />
-
 ## Deployment
 
 The app is provided with a basic configuration to be executed in [Docker](https://www.docker.com/), [Gunicorn](https://gunicorn.org/), and [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/).
@@ -153,8 +139,8 @@ The application can be easily executed in a docker container. The steps:
 > Get the code
 
 ```bash
-$ git clone https://github.com/app-generator/boilerplate-code-django-dashboard.git
-$ cd boilerplate-code-django-dashboard
+$ git clone https://github.com/app-generator/django-simple-charts.git
+$ cd django-simple-charts
 ```
 
 > Start the app in Docker
@@ -186,38 +172,7 @@ Serving on http://localhost:8001
 
 Visit `http://localhost:8001` in your browser. The app should be up & running.
 
-
 <br />
-
-### [Waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/)
----
-
-Waitress (Gunicorn equivalent for Windows) is meant to be a production-quality pure-Python WSGI server with very acceptable performance. It has no dependencies except ones that live in the Python standard library.
-
-> Install using pip
-
-```bash
-$ pip install waitress
-```
-> Start the app using [waitress-serve](https://docs.pylonsproject.org/projects/waitress/en/stable/runner.html)
-
-```bash
-$ waitress-serve --port=8001 core.wsgi:application
-Serving on http://localhost:8001
-```
-
-Visit `http://localhost:8001` in your browser. The app should be up & running.
-
-<br />
-
-### Load Data For Chart
-* In Django admin, you can import data for the **Sales** section. To do this just click on ```IMPORT``` button then select your csv, xls or etc file and submit it.
-
-![Import Data](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/admin_import.png)
-
-> Sample **[Data](https://github.com/app-generator/django-simple-charts/blob/master/media/samples/sales_data.csv)**
-
-<br>
 
 ## Credits & Links
 
@@ -228,4 +183,4 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 <br />
 
 ---
-[Django Dashboard Boilerplate](https://appseed.us/boilerplate-code/django-dashboard) - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
+Django Simple Charts - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).

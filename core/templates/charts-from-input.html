@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load static %}
 
-{% block title %} Dashboard {% endblock %}
+{% block title %} Charts from Input {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -25,7 +25,7 @@
                         <div class="col-xl-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5>Sample Bar Chart loaded STATS table</h5>
+                                    <h5>Simple Bar Chart - Information is loaded from a Database Table</h5>
                                 </div>
                                 <div class="card-block">
 
@@ -71,34 +71,103 @@
 
 urlpatterns = [
 ...
-    # Charts from file
-    path('charts-file', views.charts_file, name='home'),
+    # Charts from Input
+    path('charts-input' , views.charts_input, name='charts-input' ),
 ...
 ]
 </code>
 </pre>
 
 <br />
-<h5>App Controller</h5>
+<h5>Render Flow</h5>
 <hr />
 <p>
-    The code that render this page is fairly simple. Just load the JSON file from the filesystem and inject it into the page. 
-    <br />
-    Source: <a target="_blank" href="https://github.com/app-generator/django-simple-charts/blob/master/app/views.py">app/views.py</a> 
-    - <strong>charts_file()</strong>:
+The code that render this page use the information from STATS table.
+<br />
+The <a target="_blank" 
+        href="https://github.com/app-generator/django-simple-charts/blob/master/app/models.py">model</a>
+comes with a inner method that selects all rows: <strong>get_report()</strong>. 
+<br />
+Once the STATS rows are selected, controller read the page template and inject the information.   
+<br />
+<br />
+Source: <a target="_blank" href="https://github.com/app-generator/django-simple-charts/blob/master/app/views.py">app/views.py</a> 
+- <strong>charts_input()</strong>:
 <br />
 <pre>
 <code class="python">
 # Partial content from file: app/views.py
+def charts_input(request):
+    context = {'segment': 'charts_from_input'}
+    html_template = loader.get_template('charts-from-input.html')
 
-def charts_file(request):
-    context = {'segment': 'charts_from_file'}
-    html_template = loader.get_template('charts-from-file.html')
+    stats, labels = Stats.get_report()
+    data = [
+        {
+            'y': year,
+            'a': '{:.2f}'.format( stats[year].get('prod1_sales') ), 
+            'b': '{:.2f}'.format( stats[year].get('prod2_sales') ), 
+            'c': '{:.2f}'.format( stats[year].get('prod3_sales') )  
+        } for year in stats
+    ]
 
-    with open('sample_data/chart_morris.json', 'r') as f:
-        context['chart_data'] = json.dumps(json.load(f))
+    context['chart_data'] = json.dumps({
+        'element': 'morris-bar-chart',
+        'data': data,
+        'xkey': 'y',
+        'barSizeRatio': 0.70,
+        'barGap': 3,
+        'resize': True,
+        'responsive': True,
+        'ykeys': ['a', 'b', 'c'],  # it can be custom
+        'labels': labels,
+        'barColors': ['0-#1de9b6-#1dc4e9', '0-#899FD4-#A389D4', '#04a9f5']  # it can be custom
+    })
 
     return HttpResponse(html_template.render(context, request))
+</code>
+</pre>
+
+<br />
+<h5>Database Model - STATS</h5>
+<hr />
+<p>
+The <a target="_blank" 
+        href="https://github.com/app-generator/django-simple-charts/blob/master/app/models.py">model</a>
+comes with a inner method that selects all rows: <strong>get_report()</strong>. 
+<br />
+<br />
+<pre>
+<code class="python">
+class Stats(models.Model):
+    
+    year        = models.IntegerField(_('year')           , db_index=True)
+    prod1_sales = models.IntegerField(_('product 1 sales'), db_index=True)
+    prod2_sales = models.IntegerField(_('product 2 sales'), db_index=True)
+    prod3_sales = models.IntegerField(_('product 3 sales'), db_index=True)
+
+    class Meta:
+        verbose_name = _('statistic')
+        verbose_name_plural = _('stats')
+
+    @classmethod
+    def get_report(cls):
+
+        data   = {}
+        labels = ['prod1_sales', 'prod2_sales', 'prod3_sales']
+
+        stats = Stats.objects.order_by('year').values()
+
+        for line in stats:
+
+            if line['year'] not in data:
+                data[line['year']] = {}
+
+            data[ line['year'] ]['prod1_sales'] = line['prod1_sales']
+            data[ line['year'] ]['prod2_sales'] = line['prod2_sales']
+            data[ line['year'] ]['prod3_sales'] = line['prod3_sales']
+
+        return data, labels
 </code>
 </pre>
 
@@ -111,7 +180,7 @@ def charts_file(request):
     <br />
     The source file 
     <a target="_blank" 
-       href="https://github.com/app-generator/django-simple-charts/blob/master/core/templates/charts-from-file.html">core/templates/charts-from-file.html</a>.
+       href="https://github.com/app-generator/django-simple-charts/blob/master/core/templates/charts-from-input.html">core/templates/charts-from-input.html</a>.
 </p>
                                 </div>
                             </div>
