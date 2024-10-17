@@ -1,25 +1,18 @@
-# [Django Simple Charts](https://django-simple-charts.appseed.us/) - LIVE Demo
+# [Django Simple Charts](https://app-generator.dev/docs/developer-tools/dynamic-django/charts.html)
 
-> Playground starter to display simple charts in Django using Morris JS: 
-
-- [Charts from JSON](https://django-simple-charts.appseed.us/charts-file) - using this [sample](https://github.com/app-generator/django-simple-charts/blob/master/sample_data/chart_morris.json)
-- [Charts from Table](https://django-simple-charts.appseed.us/charts-input) - simple STATS table
-- [Charts from DATA chunk](https://django-simple-charts.appseed.us/charts-input) - using this [sample](https://github.com/app-generator/django-simple-charts/blob/master/sample_data/sales_data.csv) file
-- UI Kit: **[Datta Able](https://appseed.us/admin-dashboards/django-dashboard-dattaable)** (Lite Version) provided by **[CodedThemes](https://appseed.us/agency/codedthemes)**
-- Deployment scripts: Docker, Gunicorn / Nginx
-- Support via **Github** (issues tracker) and [Discord](https://discord.gg/fZC6hup) provided by **AppSeed**
+Playground starter to display simple charts in Django using Morris JS: 
 
 <br />
 
-> Links
+---
 
-- [LIVE Demo](https://django-simple-charts.appseed.us/) - project in action
-- [Generic Codebase](https://github.com/app-generator/boilerplate-code-django-dashboard)
-- [Morris Charts](https://morrisjs.github.io/morris.js/) - Getting started guide
+> For a **complete set of features** and long-term support, check out **[Dynamic Django](https://app-generator.dev/docs/developer-tools/dynamic-django/index.html)**, a powerful starter that incorporates:
 
-<br />
-
-![Boierplate Code Django Dashboard - Template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/django-simple-charts/master/media/display.png)
+- ✅ [Dynamic DataTables](https://app-generator.dev/docs/developer-tools/dynamic-django/datatables.html): using a single line of configuration, the data saved in any table is automatically managed
+- ✅ [Dynamic API](https://app-generator.dev/docs/developer-tools/dynamic-django/api.html): any model can become a secure API Endpoint using DRF
+- ✅ [Dynamic Charts](https://app-generator.dev/docs/developer-tools/dynamic-django/charts.html): extract relevant charts without coding all major types are supported
+- ✅ [CSV Loader](https://app-generator.dev/docs/developer-tools/dynamic-django/csv-loader.html): translate CSV files into Django Models and (optional) load the information
+- ✅ Powerful [CLI Tools](https://app-generator.dev/docs/developer-tools/dynamic-django/cli.html) for the GIT interface, configuration editing, updating the configuration and database (create models, migrate DB)
 
 <br />
 
